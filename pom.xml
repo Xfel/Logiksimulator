@@ -5,7 +5,17 @@
 	<artifactId>logicsim</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Logiksimulator</name>
-	
+
+	<scm>
+		<connection>scm:git:git@github.com:Xfel/Logiksimulator.git</connection>
+		<url>scm:git:git@github.com:Xfel/Logiksimulator.git</url>
+		<developerConnection>scm:git:git@github.com:Xfel/Logiksimulator.git</developerConnection>
+	</scm>
+	<issueManagement>
+		<url>https://github.com/Xfel/Logiksimulator/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -17,6 +27,7 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+			
 		</plugins>
 	</build>
 	<dependencies>
@@ -27,4 +38,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<url>https://github.com/Xfel/Logiksimulator</url>
 </project>
