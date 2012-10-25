@@ -6,8 +6,9 @@ package de.goca.logicsim.model;
  * @author Felix Treede
  * 
  */
-public interface IPortListener {
-
+public interface IPortListener
+{
+	
 	/**
 	 * Callback, wenn der Ausgang geändert wird (Änderung im Bauteil).
 	 * 
@@ -15,7 +16,7 @@ public interface IPortListener {
 	 *            der geänderte Port
 	 */
 	void onOutputChanged(Port port);
-
+	
 	/**
 	 * Callback, wenn der Eingang geändert wird (Änderung in der Leitung).
 	 * 
@@ -23,5 +24,5 @@ public interface IPortListener {
 	 *            der geänderte Port
 	 */
 	void onInputChanged(Port port);
-
+	
 }
