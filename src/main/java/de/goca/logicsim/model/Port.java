@@ -15,6 +15,8 @@ public class Port {
 	public static final int INPUT = 0x1;
 	public static final int OUTPUT = 0x2;
 
+	private String id;
+	
 	private int type;
 
 	private int width;
@@ -22,6 +24,19 @@ public class Port {
 	private BitSet data;
 
 	private List<IPortListener> listeners = new ArrayList<IPortListener>();
+
+	
+	/**
+	 * Standard-Konstruktor
+	 * @param id
+	 * @param type
+	 * @param width
+	 */
+	public Port(String id, int type, int width) {
+		this.id = id;
+		this.type = type;
+		this.width = width;
+	}
 
 	public int getType() {
 		return type;
@@ -80,5 +95,40 @@ public class Port {
 			listener.onInputChanged(this);
 		}
 	}
+	
+	/**
+	 * Gibt die Port-ID zurück.
+	 * @return
+	 */
+	public String getId() {
+		return id;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Port other = (Port) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+	
+	
 
 }
