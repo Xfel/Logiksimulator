@@ -2,6 +2,8 @@
  * 
  */
 /**
+ * Enthält JUnit-test zu den Model-Klassen
+ * 
  * @author Felix Treede
  *
  */
