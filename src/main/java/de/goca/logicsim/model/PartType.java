@@ -13,16 +13,20 @@ public abstract class PartType
 	
 	private String name;
 	
+	private PartAttribute<?>[] attributes;
+	
 	/**
 	 * Standard-Konstruktor
 	 * 
 	 * @param id
 	 * @param name
+	 * @param attributes
 	 */
-	protected PartType(String id, String name)
+	protected PartType(String id, String name, PartAttribute<?>... attributes)
 	{
 		this.id = id;
 		this.name = name;
+		this.attributes = attributes;
 	}
 	
 	/**
@@ -50,6 +54,16 @@ public abstract class PartType
 	public String getName()
 	{
 		return name;
+	}
+	
+	/**
+	 * Gibt die erlaubten Attribute dieses Bauteils zurück.
+	 * 
+	 * @return
+	 */
+	public PartAttribute<?>[] getAttributes()
+	{
+		return attributes.clone();
 	}
 	
 	@Override

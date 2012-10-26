@@ -3,6 +3,7 @@ package de.goca.logicsim.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Abstrakte Oberklasse aller Bauteile.
@@ -16,6 +17,8 @@ public abstract class AbstractPart extends Updatable implements IPortListener
 	private List<Port> ports;
 	
 	private PartType type;
+	
+	private Map<PartAttribute<?>, Object> attributes;
 	
 	/**
 	 * Standard-Konstruktor
@@ -92,6 +95,41 @@ public abstract class AbstractPart extends Updatable implements IPortListener
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Gibt den Wert der Eigenschaft zurück
+	 * 
+	 * @param attribute
+	 * @return
+	 */
+	public <T> T getAttribute(PartAttribute<T> attribute)
+	{
+		Object value = attributes.get(attribute);
+		
+		if (value == null)
+		{
+			return attribute.getDefaultValue();
+		}
+		
+		return attribute.getValueClass().cast(value);
+	}
+	
+	public <T> void setAttribute(PartAttribute<T> attribute, T value)
+	{
+		if (!attribute.isValid(value))
+		{
+			throw new IllegalArgumentException("Invalid attribute value");
+		}
+		
+		if (value.equals(attribute.getDefaultValue()))
+		{
+			attributes.remove(attribute);
+		}
+		else
+		{
+			attributes.put(attribute, value);
+		}
 	}
 	
 	@Override
