@@ -66,6 +66,42 @@ public abstract class PartType
 		return attributes.clone();
 	}
 	
+	/**
+	 * Sucht eine Eigenschaft anhand ihrer ID.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public PartAttribute<?> getAttribute(String id)
+	{
+		for (int i = 0; i < attributes.length; i++)
+		{
+			if (attributes[i].getId().equals(id))
+			{
+				return attributes[i];
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Überprüft, ob das Bauteil die gegebene Eigenschaft unterstützt.
+	 * 
+	 * @param attribute
+	 * @return
+	 */
+	public boolean isAttributeSupported(PartAttribute<?> attribute)
+	{
+		for (int i = 0; i < attributes.length; i++)
+		{
+			if (attributes[i].equals(attribute))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public int hashCode()
 	{

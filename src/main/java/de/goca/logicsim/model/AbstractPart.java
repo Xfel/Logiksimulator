@@ -2,6 +2,7 @@ package de.goca.logicsim.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ public abstract class AbstractPart extends Updatable implements IPortListener
 	{
 		this.type = type;
 		this.ports = new ArrayList<Port>();
+		this.attributes = new HashMap<PartAttribute<?>, Object>();
 	}
 	
 	/**
