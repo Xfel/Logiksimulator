@@ -4,10 +4,20 @@ package de.goca.logicsim.model;
  * Eine Eigenschaft eines Part-Objektes.
  * 
  * @author Felix Treede
+ * @param <T>
+ *            the attribute type
  * 
  */
 public class PartAttribute<T>
 {
+	
+	/**
+	 * Das Standard-Attribut "Breite", das, sofern unterstützt, die Verwendung einzelner Gatter ohne Aufwand mehrmals
+	 * nebeneinander ermöglicht.
+	 */
+	public static final PartAttribute<Integer> WIDTH = new PartAttribute<Integer>("width", Integer.class,
+			Integer.valueOf(1), Integer.valueOf(1), null);
+	
 	private String id;
 	
 	private Class<T> valueClass;
