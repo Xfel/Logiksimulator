@@ -1,5 +1,6 @@
 package de.goca.logicsim.model;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
@@ -12,6 +13,81 @@ import java.util.List;
  */
 public class Port
 {
+	
+	private static class WeakPortListener implements IPortListener
+	{
+		
+		private WeakReference<IPortListener> target;
+		
+		WeakPortListener(IPortListener target)
+		{
+			this.target = new WeakReference<IPortListener>(target);
+		}
+		
+		@Override
+		public void onOutputChanged(Port port)
+		{
+			IPortListener st = target.get();
+			if (st != null)
+			{
+				st.onOutputChanged(port);
+			}
+			else
+			{
+				port.listeners.remove(this);
+			}
+		}
+		
+		@Override
+		public void onInputChanged(Port port)
+		{
+			IPortListener st = target.get();
+			if (st != null)
+			{
+				st.onInputChanged(port);
+			}
+			else
+			{
+				port.listeners.remove(this);
+			}
+		}
+
+		/* (non-Javadoc)
+		 * @see java.lang.Object#hashCode()
+		 */
+		@Override
+		public int hashCode()
+		{
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((target.get() == null) ? 0 : target.get().hashCode());
+			return result;
+		}
+
+		/* (non-Javadoc)
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(Object obj)
+		{
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			WeakPortListener other = (WeakPortListener) obj;
+			if (target.get() == null)
+			{
+				if (other.target.get() != null)
+					return false;
+			}
+			else if (!target.get().equals(other.target.get()))
+				return false;
+			return true;
+		}
+		
+	}
 	
 	public static final int INPUT = 0x1;
 	public static final int OUTPUT = 0x2;
@@ -77,7 +153,7 @@ public class Port
 	 */
 	public void addListener(IPortListener listener)
 	{
-		listeners.add(listener);
+		listeners.add(new WeakPortListener(listener));
 	}
 	
 	/**
@@ -87,7 +163,7 @@ public class Port
 	 */
 	public void removeListener(IPortListener listener)
 	{
-		listeners.remove(listener);
+		listeners.remove(new WeakPortListener(listener));
 	}
 	
 	/**
@@ -231,7 +307,7 @@ public class Port
 		this.output.or(output);
 		onInputChanged();
 	}
-
+	
 	/**
 	 * @return the width
 	 */
@@ -239,15 +315,14 @@ public class Port
 	{
 		return width;
 	}
-
+	
 	/**
-	 * @param width the width to set
+	 * @param width
+	 *            the width to set
 	 */
 	public void setWidth(int width)
 	{
 		this.width = width;
 	}
-	
-	
 	
 }

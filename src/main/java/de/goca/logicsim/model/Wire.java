@@ -70,6 +70,10 @@ public class Wire extends Updatable implements IPortListener
 			port.addListener(this);
 			setDirty();
 		}
+		
+		if(port.isInput()){
+			port.setInput(state);
+		}
 	}
 	
 	/**
