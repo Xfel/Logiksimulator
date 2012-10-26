@@ -33,8 +33,8 @@ public class UpdateManager
 		{
 			if (obj.isDirty())
 			{
-				obj.update();
 				obj.clearDirty();
+				obj.update();
 			}
 		}
 	}
