@@ -24,7 +24,8 @@ public class AbstractPartTest
 	
 	private TestPart part;// erbt von AbstractPart
 	private static PartType partType;
-	private Port testPort;
+	private Port testPortIn;
+	private Port testPortOut;
 	private static PartAttribute<Integer> attributes0;
 	private static PartAttribute<Integer> attributes1;
 	private static PartAttribute<Integer> attributes2;
@@ -63,7 +64,8 @@ public class AbstractPartTest
 	public void setUp() throws Exception
 	{
 		part = (TestPart) partType.createPart();
-		testPort = new Port("tstPort", Port.INPUT, 32);
+		testPortIn = new Port("testPortIn", Port.INPUT, 32);
+		testPortOut = new Port("testPortOut", Port.OUTPUT, 32);
 	}
 	
 	private static class TestPart extends AbstractPart
@@ -112,13 +114,17 @@ public class AbstractPartTest
 	{
 		int length = part.getPorts().size();
 		
-		part.addPort(testPort);
+		part.addPort(testPortIn);
 		
 		assertEquals(length + 1, part.getPorts().size());
 		
+		part.addPort(testPortOut);
+		
+		assertEquals(length + 2, part.getPorts().size());
+		
 		try
 		{
-			part.addPort(testPort);
+			part.addPort(testPortIn);
 			fail("Exception not thrown when expected to");
 		}
 		catch (IllegalArgumentException e)
@@ -142,21 +148,44 @@ public class AbstractPartTest
 	@Test
 	public void testGetPort()
 	{
-		part.addPort(testPort);
+		part.addPort(testPortIn);
 		
 		assertEquals(null, part.getPort("Dieser Port existiert nicht"));
-		assertEquals(testPort, part.getPort("tstPort"));
+		assertEquals(testPortIn, part.getPort("testPortIn"));
 	}
 	
 	@Test
 	public void testGetAttribute()
 	{
+		try
+		{
+			part.getAttribute(attributes4); // Wert im Prinzip egal
+			fail("Exception not thrown when expected to");
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("unsupported Attribute", e.getMessage());
+		}
 		
+		assertEquals(Integer.valueOf(1), part.getAttribute(attributes1));
+		
+		part.setAttribute(attributes1, 2);
+		assertEquals(Integer.valueOf(2), part.getAttribute(attributes1));
 	}
 	
 	@Test
 	public void testSetAttribute()
 	{
+		try
+		{
+			part.setAttribute(attributes4, Integer.valueOf(0)); // Wert im Prinzip egal
+			fail("Exception not thrown when expected to");
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("unsupported Attribute", e.getMessage());
+		}
+		
 		try
 		{
 			part.setAttribute(attributes2, Integer.valueOf(127));
@@ -172,15 +201,5 @@ public class AbstractPartTest
 		
 		part.setAttribute(attributes0, 0);
 		assertEquals(Integer.valueOf(0), part.getAttribute(attributes0));
-		
-		try
-		{
-			part.setAttribute(attributes4, Integer.valueOf(0)); // Wert im Prinzip egal
-			fail("Exception not thrown when expected to");
-		}
-		catch (Exception e)
-		{
-			// TODO: handle exception
-		}
 	}
 }
