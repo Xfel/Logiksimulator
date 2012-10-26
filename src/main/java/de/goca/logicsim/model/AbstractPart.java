@@ -30,7 +30,7 @@ public abstract class AbstractPart extends Updatable implements IPortListener
 	{
 		this.type = type;
 		this.ports = new ArrayList<Port>();
-		this.attributes = new HashMap<PartAttribute<?>, Object>();
+		attributes = new HashMap<PartAttribute<?>, Object>();
 	}
 	
 	/**
