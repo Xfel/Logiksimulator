@@ -22,7 +22,9 @@ public class Port
 	
 	private int width;
 	
-	private BitSet data;
+	private BitSet input, output;
+	
+	AbstractPart owner;
 	
 	private List<IPortListener> listeners = new ArrayList<IPortListener>();
 	
@@ -38,6 +40,9 @@ public class Port
 		this.id = id;
 		this.type = type;
 		this.width = width;
+		
+		input = new BitSet(width);
+		output = new BitSet(width);
 	}
 	
 	public int getType()
@@ -117,12 +122,22 @@ public class Port
 		return id;
 	}
 	
+	/**
+	 * 
+	 * @return das Bauteil, dem dr Port gehört.
+	 */
+	public AbstractPart getOwner()
+	{
+		return owner;
+	}
+	
 	@Override
 	public int hashCode()
 	{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
 		return result;
 	}
 	
@@ -153,7 +168,68 @@ public class Port
 		{
 			return false;
 		}
+		if (owner == null)
+		{
+			if (other.owner != null)
+			{
+				return false;
+			}
+		}
+		else if (!owner.equals(other.owner))
+		{
+			return false;
+		}
 		return true;
+	}
+	
+	/**
+	 * 
+	 * @return Eingehendes Signal
+	 */
+	public BitSet getInput()
+	{
+		return input;
+	}
+	
+	/**
+	 * 
+	 * @return Ausgehendes Signal
+	 */
+	public BitSet getOutput()
+	{
+		return output;
+	}
+	
+	/**
+	 * Ändert das eingehende Signal
+	 * 
+	 * @param input
+	 */
+	public void setInput(BitSet input)
+	{
+		if (input.equals(this.input))
+		{
+			return;
+		}
+		this.input.clear();
+		this.input.or(input);
+		onInputChanged();
+	}
+	
+	/**
+	 * Ändert das ausgehende Signal
+	 * 
+	 * @param input
+	 */
+	public void setOutput(BitSet output)
+	{
+		if (output.equals(this.output))
+		{
+			return;
+		}
+		this.output.clear();
+		this.output.or(output);
+		onInputChanged();
 	}
 	
 }

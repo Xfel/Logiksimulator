@@ -46,8 +46,12 @@ public abstract class AbstractPart extends Updatable implements IPortListener
 		}
 		
 		ports.add(port);
+		port.owner = this;
 		
-		port.addListener(this);
+		if (port.isInput())
+		{
+			port.addListener(this);
+		}
 	}
 	
 	/**
