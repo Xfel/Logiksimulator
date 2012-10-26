@@ -153,6 +153,17 @@ public abstract class AbstractPart extends Updatable implements IPortListener
 		{
 			attributes.put(attribute, value);
 		}
+		
+		onAttributeChanged(attribute, value);
+	}
+	
+	/**
+	 * Wird nach einer Eigenschaftsänderung aufgerufen. Unterklassen sollten diese Methode überschreiben, um auf Änderungen zu reagieren.
+	 * @param attribute
+	 * @param value
+	 */
+	protected <T> void onAttributeChanged(PartAttribute<T> attribute, T value){
+		// empty by default
 	}
 	
 	@Override

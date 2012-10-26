@@ -186,7 +186,7 @@ public class Port
 	 * 
 	 * @return Eingehendes Signal
 	 */
-	public BitSet getInput()
+	public synchronized BitSet getInput()
 	{
 		return input;
 	}
@@ -195,7 +195,7 @@ public class Port
 	 * 
 	 * @return Ausgehendes Signal
 	 */
-	public BitSet getOutput()
+	public synchronized BitSet getOutput()
 	{
 		return output;
 	}
@@ -205,7 +205,7 @@ public class Port
 	 * 
 	 * @param input
 	 */
-	public void setInput(BitSet input)
+	public synchronized void setInput(BitSet input)
 	{
 		if (input.equals(this.input))
 		{
@@ -221,7 +221,7 @@ public class Port
 	 * 
 	 * @param input
 	 */
-	public void setOutput(BitSet output)
+	public synchronized void setOutput(BitSet output)
 	{
 		if (output.equals(this.output))
 		{
@@ -231,5 +231,23 @@ public class Port
 		this.output.or(output);
 		onInputChanged();
 	}
+
+	/**
+	 * @return the width
+	 */
+	public int getWidth()
+	{
+		return width;
+	}
+
+	/**
+	 * @param width the width to set
+	 */
+	public void setWidth(int width)
+	{
+		this.width = width;
+	}
+	
+	
 	
 }
