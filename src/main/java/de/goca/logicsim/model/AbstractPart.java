@@ -15,11 +15,11 @@ import java.util.Map;
 public abstract class AbstractPart extends Updatable implements IPortListener
 {
 	
-	private List<Port> ports;
+	private final List<Port> ports;
 	
-	private PartType type;
+	private final PartType type;
 	
-	private Map<PartAttribute<?>, Object> attributes;
+	private final Map<PartAttribute<?>, Object> attributes;
 	
 	/**
 	 * Standard-Konstruktor
@@ -106,7 +106,8 @@ public abstract class AbstractPart extends Updatable implements IPortListener
 	/**
 	 * Gibt den Wert der Eigenschaft zurück.
 	 * 
-	 * @param attribute Eigenschafts-ID
+	 * @param attribute
+	 *            Eigenschafts-ID
 	 * @return den Eigenschaftswert
 	 */
 	public <T> T getAttribute(PartAttribute<T> attribute)
@@ -129,8 +130,10 @@ public abstract class AbstractPart extends Updatable implements IPortListener
 	/**
 	 * Setzt eine Eigenschaft.
 	 * 
-	 * @param attribute Eigenschafts-ID
-	 * @param value der neue Wert
+	 * @param attribute
+	 *            Eigenschafts-ID
+	 * @param value
+	 *            der neue Wert
 	 * @throws IllegalArgumentException
 	 *             wenn die Eigenschaft nicht unterstützt wird oder wenn der neue Wert nicht erlaubt ist.
 	 */
@@ -158,11 +161,14 @@ public abstract class AbstractPart extends Updatable implements IPortListener
 	}
 	
 	/**
-	 * Wird nach einer Eigenschaftsänderung aufgerufen. Unterklassen sollten diese Methode überschreiben, um auf Änderungen zu reagieren.
+	 * Wird nach einer Eigenschaftsänderung aufgerufen. Unterklassen sollten diese Methode überschreiben, um auf
+	 * Änderungen zu reagieren.
+	 * 
 	 * @param attribute
 	 * @param value
 	 */
-	protected <T> void onAttributeChanged(PartAttribute<T> attribute, T value){
+	protected <T> void onAttributeChanged(PartAttribute<T> attribute, T value)
+	{
 		// empty by default
 	}
 	
