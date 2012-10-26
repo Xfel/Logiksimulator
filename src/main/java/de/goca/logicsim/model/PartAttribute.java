@@ -37,6 +37,19 @@ public class PartAttribute<T>
 	 */
 	public PartAttribute(String name, Class<T> valueClass, T defaultValue)
 	{
+		if (name == null)
+		{
+			throw new NullPointerException("Name may not be null");
+		}
+		if (valueClass == null)
+		{
+			throw new NullPointerException("ValueClass may not be null");
+		}
+		if (defaultValue == null)
+		{
+			throw new NullPointerException("defaultValue may not be null");
+		}
+		
 		this.id = name;
 		this.valueClass = valueClass;
 		this.defaultValue = defaultValue;
@@ -60,6 +73,13 @@ public class PartAttribute<T>
 //		this.defaultValue = defaultValue;
 		
 		this(id, valueClass, defaultValue);
+		
+		if ((minimum != null && minimum.compareTo(defaultValue) > 0)
+				|| (maximum != null && maximum.compareTo(defaultValue) < 0))
+		{
+			throw new IllegalArgumentException("defaultValue is out of the specified range");
+		}
+		
 		this.minimum = minimum;
 		this.maximum = maximum;
 	}
@@ -116,7 +136,7 @@ public class PartAttribute<T>
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+		result = prime * result + this.id.hashCode();
 		return result;
 	}
 	
@@ -133,12 +153,16 @@ public class PartAttribute<T>
 			return false;
 		}
 		
+//FIXME	Warum laufen die Tests durch, wenn das < zu einem > wird?
 		if (this.minimum != null && this.minimum.compareTo(value) < 0)
+//		if (this.minimum != null && this.minimum.compareTo(value) > 0)
 		{
 			return false;
 		}
 		
+//FIXME	Warum laufen die Tests durch, wenn das > zu einem < wird?
 		if (this.maximum != null && this.maximum.compareTo(value) > 0)
+//		if (this.maximum != null && this.maximum.compareTo(value) < 0)
 		{
 			return false;
 		}
