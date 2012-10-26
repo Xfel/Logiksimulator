@@ -48,8 +48,12 @@ public abstract class AbstractPart extends Updatable implements IPortListener
 		}
 		
 		ports.add(port);
+		port.owner = this;
 		
-		port.addListener(this);
+		if (port.isInput())
+		{
+			port.addListener(this);
+		}
 	}
 	
 	/**
@@ -100,13 +104,18 @@ public abstract class AbstractPart extends Updatable implements IPortListener
 	}
 	
 	/**
-	 * Gibt den Wert der Eigenschaft zurück
+	 * Gibt den Wert der Eigenschaft zurück.
 	 * 
-	 * @param attribute
-	 * @return
+	 * @param attribute Eigenschafts-ID
+	 * @return den Eigenschaftswert
 	 */
 	public <T> T getAttribute(PartAttribute<T> attribute)
 	{
+		if (!type.isAttributeSupported(attribute))
+		{
+			throw new IllegalArgumentException("unsupported Attribute");
+		}
+		
 		Object value = attributes.get(attribute);
 		
 		if (value == null)
@@ -117,8 +126,20 @@ public abstract class AbstractPart extends Updatable implements IPortListener
 		return attribute.getValueClass().cast(value);
 	}
 	
+	/**
+	 * Setzt eine Eigenschaft.
+	 * 
+	 * @param attribute Eigenschafts-ID
+	 * @param value der neue Wert
+	 * @throws IllegalArgumentException
+	 *             wenn die Eigenschaft nicht unterstützt wird oder wenn der neue Wert nicht erlaubt ist.
+	 */
 	public <T> void setAttribute(PartAttribute<T> attribute, T value)
 	{
+		if (!type.isAttributeSupported(attribute))
+		{
+			throw new IllegalArgumentException("unsupported Attribute");
+		}
 		if (!attribute.isValid(value))
 		{
 			throw new IllegalArgumentException("Invalid attribute value");
