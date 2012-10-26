@@ -55,74 +55,13 @@ public class PartAttribute<T>
 	public PartAttribute(String id, Class<T> valueClass, T defaultValue, Comparable<? super T> minimum,
 			Comparable<? super T> maximum)
 	{
-		this.id = id;
-		this.valueClass = valueClass;
-		this.defaultValue = defaultValue;
+//		this.id = id;
+//		this.valueClass = valueClass;
+//		this.defaultValue = defaultValue;
+		
+		this(id, valueClass, defaultValue);
 		this.minimum = minimum;
 		this.maximum = maximum;
-	}
-	
-	/**
-	 * 
-	 * @return die Eigenschafts-ID
-	 */
-	public String getId()
-	{
-		return id;
-	}
-	
-	/**
-	 * 
-	 * @return den Datentyp des Attributs
-	 */
-	public Class<T> getValueClass()
-	{
-		return valueClass;
-	}
-	
-	/**
-	 * Gibt den standard-wert der Eigenschaft zurück.
-	 * 
-	 * @return
-	 */
-	public T getDefaultValue()
-	{
-		return defaultValue;
-	}
-	
-	/**
-	 * Überprüft, ob der gegebene Wert für diese Eigenschaft erlaubt ist.
-	 * 
-	 * @param value
-	 * @return
-	 */
-	public boolean isValid(T value)
-	{
-		if (!valueClass.isInstance(value))
-		{
-			return false;
-		}
-		
-		if (minimum != null && minimum.compareTo(value) < 0)
-		{
-			return false;
-		}
-		
-		if (maximum != null && maximum.compareTo(value) > 0)
-		{
-			return false;
-		}
-		
-		return true;
-	}
-	
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
 	}
 	
 	@Override
@@ -136,7 +75,7 @@ public class PartAttribute<T>
 		{
 			return false;
 		}
-		if (getClass() != obj.getClass())
+		if (this.getClass() != obj.getClass())
 		{
 			return false;
 		}
@@ -144,9 +83,72 @@ public class PartAttribute<T>
 		return this.id.equals(other.id);
 	}
 	
+	/**
+	 * Gibt den standard-wert der Eigenschaft zurück.
+	 * 
+	 * @return
+	 */
+	public T getDefaultValue()
+	{
+		return this.defaultValue;
+	}
+	
+	/**
+	 * 
+	 * @return die Eigenschafts-ID
+	 */
+	public String getId()
+	{
+		return this.id;
+	}
+	
+	/**
+	 * 
+	 * @return den Datentyp des Attributs
+	 */
+	public Class<T> getValueClass()
+	{
+		return this.valueClass;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+		return result;
+	}
+	
+	/**
+	 * Überprüft, ob der gegebene Wert für diese Eigenschaft erlaubt ist.
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public boolean isValid(T value)
+	{
+		if (!this.valueClass.isInstance(value))
+		{
+			return false;
+		}
+		
+		if (this.minimum != null && this.minimum.compareTo(value) < 0)
+		{
+			return false;
+		}
+		
+		if (this.maximum != null && this.maximum.compareTo(value) > 0)
+		{
+			return false;
+		}
+		
+		return true;
+	}
+	
 	@Override
 	public String toString()
 	{
-		return id;
+		return this.id;
 	}
 }
