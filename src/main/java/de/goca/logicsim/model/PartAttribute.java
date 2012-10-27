@@ -153,16 +153,12 @@ public class PartAttribute<T>
 			return false;
 		}
 		
-//FIXME	Warum laufen die Tests durch, wenn das < zu einem > wird?
-		if (this.minimum != null && this.minimum.compareTo(value) < 0)
-//		if (this.minimum != null && this.minimum.compareTo(value) > 0)
+		if (this.minimum != null && this.minimum.compareTo(value) > 0)
 		{
 			return false;
 		}
 		
-//FIXME	Warum laufen die Tests durch, wenn das > zu einem < wird?
-		if (this.maximum != null && this.maximum.compareTo(value) > 0)
-//		if (this.maximum != null && this.maximum.compareTo(value) < 0)
+		if (this.maximum != null && this.maximum.compareTo(value) < 0)
 		{
 			return false;
 		}
